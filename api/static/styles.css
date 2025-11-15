@@ -1,0 +1,180 @@
+:root {
+  --bg-dark: #0f172a;
+  --panel: #0f172a;
+  --card: #111827;
+  --muted: #94a3b8;
+  --accent: #00c3ff;
+  --light-bg: #f8fafc;
+  --light-card: #ffffff;
+  --light-text: #0b1220;
+  --light-muted: #475569;
+}
+
+body {
+  margin: 0;
+  font-family: Inter, system-ui, Arial;
+  background: var(--bg-dark);
+  color: #ffffff;
+  padding: 22px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.brand {
+  font-weight: 700;
+  font-size: 20px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(90deg, #00c3ff, #3dff7a);
+  border-radius: 6px;
+}
+.header-right {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+.tabs {
+  display: flex;
+  gap: 12px;
+}
+.tab {
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--muted);
+}
+.tab.active {
+  background: #0b1220;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(2, 6, 23, 0.6);
+}
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.badge {
+  background: #10b981;
+  color: #06241b;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+}
+.light-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  margin-top: 18px;
+}
+.kpi {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 14px;
+  border-radius: 12px;
+  width: 33%;
+  min-height: 72px;
+}
+.kpi .value {
+  font-size: 22px;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.charts {
+  display: flex;
+  gap: 16px;
+  margin-top: 18px;
+}
+.chart-card {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  padding: 14px;
+  width: 33%;
+  height: 320px;
+}
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* History */
+.page {
+  display: none;
+  margin-top: 16px;
+}
+.page.active {
+  display: block;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#historyTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+th, td {
+  padding: 8px 10px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--muted);
+}
+th {
+  font-weight: 600;
+  color: #fff;
+}
+
+/* AI Insights */
+.insight-grid {
+  display: flex;
+  gap: 16px;
+}
+.insight-box {
+  width: 50%;
+  background: rgba(255, 255, 255, 0.02);
+  padding: 12px;
+  border-radius: 10px;
+}
+
+/* Light mode */
+.light body,
+.light {
+  background: var(--light-bg) !important;
+  color: var(--light-text) !important;
+}
+.light .tab {
+  color: var(--light-muted);
+}
+.light .tab.active {
+  background: var(--light-card);
+  color: var(--light-text);
+  box-shadow: none;
+}
+.light .kpi,
+.light .chart-card {
+  background: var(--light-card);
+  color: var(--light-text);
+}
+.light .badge {
+  background: #0ea5a2;
+  color: #042f2e;
+}
