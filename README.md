@@ -50,29 +50,31 @@ docker compose up -d --build
 ## 📁 Project Structure
 
 SysSentry/
-├── api/ # FastAPI backend
-│ ├── app.py
-│ ├── requirements.txt
+├── api/                     # FastAPI backend
+│   ├── app.py
+│   ├── requirements.txt
 │
-├── dashboard/ # Static dashboard UI
-│ ├── index.html
-│ ├── static/
+├── dashboard/               # Static dashboard UI
+│   ├── index.html
+│   └── static/
+│       └── dashboard.png    # Dashboard preview image
 │
-├── monitor/ # Client-side monitoring agent
-│ ├── monitor.py
-│ ├── requirements.txt
+├── monitor/                 # Client-side monitoring agent
+│   ├── monitor.py
+│   └── requirements.txt
 │
 ├── diagnostics/
-│ ├── diagnostics.py
+│   └── diagnostics.py
 │
 ├── alerts/
-│ ├── alerts.py
+│   └── alerts.py
 │
 ├── Dockerfile
 ├── docker-compose.yml
 │
-└── .github/workflows/
-└── deploy.yml # CI/CD pipeline
+└── .github/
+    └── workflows/
+        └── deploy.yml       # CI/CD pipeline
 
 
 ---
