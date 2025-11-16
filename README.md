@@ -45,10 +45,10 @@ docker compose up -d --build
 - Auto deploys to EC2 on every push
 - Pull latest code, rebuilds Docker, restarts services
 
----
 
 ## 📁 Project Structure
 
+```
 SysSentry/
 ├── api/                     # FastAPI backend
 │   ├── app.py
@@ -75,9 +75,8 @@ SysSentry/
 └── .github/
     └── workflows/
         └── deploy.yml       # CI/CD pipeline
+```
 
-
----
 
 ## ⚙️ Architecture Overview
 
