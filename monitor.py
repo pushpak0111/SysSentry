@@ -1,9 +1,12 @@
 import psutil
 import time
 import requests
+import platform
+import os
 from datetime import datetime
 
-API_URL = "http://127.0.0.1:8000/ingest"
+# Build API URL dynamically (works in local + Docker)
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000") + "/ingest"
 
 prev_disk = psutil.disk_io_counters()
 prev_time = time.time()
@@ -24,11 +27,10 @@ def get_disk_stats():
     read_iops = (new_disk.read_count - prev_disk.read_count) / time_diff
     write_iops = (new_disk.write_count - prev_disk.write_count) / time_diff
 
-    # MB/s
+    # MB/s throughput
     read_mb = (new_disk.read_bytes - prev_disk.read_bytes) / (1024 * 1024) / time_diff
     write_mb = (new_disk.write_bytes - prev_disk.write_bytes) / (1024 * 1024) / time_diff
 
-    # Update state
     prev_disk = new_disk
     prev_time = now
 
@@ -38,7 +40,14 @@ def get_disk_stats():
 def log_metrics():
     cpu = psutil.cpu_percent(interval=1)
     mem = psutil.virtual_memory().percent
-    disk_activity = psutil.disk_usage("C:\\").percent  # storage usage %
+
+    # 🔥 FIX: Auto-detect correct disk path for Windows vs Docker/Linux
+    if platform.system() == "Windows":
+        disk_path = "C:\\"
+    else:
+        disk_path = "/"
+
+    disk_activity = psutil.disk_usage(disk_path).percent  # storage usage %
 
     read_iops, write_iops, throughput = get_disk_stats()
 
@@ -46,7 +55,7 @@ def log_metrics():
         "timestamp": datetime.now().isoformat(),
         "cpu_percent": cpu,
         "memory_percent": mem,
-        "disk_percent": disk_activity,       # Storage %
+        "disk_percent": disk_activity,
         "read_iops": read_iops,
         "write_iops": write_iops,
         "throughput": throughput

@@ -1,9 +1,0 @@
-fastapi
-uvicorn
-chartjs
-psutil
-requests
-python-dotenv
-supabase
-sqlalchemy
-psycopg2-binary

@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: syssentry_api
+    ports:
+      - "8000:8000"
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_ROLE: ${SUPABASE_SERVICE_ROLE}
+    restart: always
+
+  monitor:
+    build:
+      context: .
+      dockerfile: Dockerfile.monitor
+    container_name: syssentry_monitor
+    depends_on:
+      - api
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_ROLE: ${SUPABASE_SERVICE_ROLE}
+      API_URL: "http://api:8000"
+    restart: always
+
+  alerts:
+    build:
+      context: .
+      dockerfile: Dockerfile.alerts
+    container_name: syssentry_alerts
+    depends_on:
+      - api
+    environment:
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_SERVICE_ROLE: ${SUPABASE_SERVICE_ROLE}
+      API_URL: "http://api:8000"
+    restart: always

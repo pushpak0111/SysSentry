@@ -42,6 +42,13 @@ app = FastAPI()
 STATIC_PATH = os.path.join(os.path.dirname(__file__), "static")
 app.mount("/static", StaticFiles(directory=STATIC_PATH), name="static")
 
+from fastapi.responses import FileResponse
+
+@app.get("/")
+def serve_dashboard():
+    index_path = os.path.join(STATIC_PATH, "index.html")
+    return FileResponse(index_path)
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],

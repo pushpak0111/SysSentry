@@ -1,9 +1,12 @@
 import psutil
 import time
 import requests
+import os
 from datetime import datetime
 
-API_URL = "http://127.0.0.1:8000/alert"
+# Build API URL dynamically (local or Docker)
+API_URL = os.getenv("API_URL", "http://127.0.0.1:8000") + "/alert"
+
 
 CPU_THRESHOLD = 85
 MEM_THRESHOLD = 80
