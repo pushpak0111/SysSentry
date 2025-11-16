@@ -252,19 +252,6 @@
         transition: 0.3s;
       }
 
-      .icon-switch .moon {
-        left: 6px;
-        opacity: 1;
-      }
-
-      .icon-switch input:checked + .slider .moon {
-        opacity: 1;
-      }
-
-      .icon-switch .sun {
-        right: 6px;
-      }
-
       .icon-switch input:checked + .slider .sun {
         opacity: 1;
       }
@@ -284,20 +271,18 @@
   <body>
     <header>
       <div class="brand">
-        <img
-          src=""
-          style="
+        <div style="
             width: 28px;
             height: 28px;
             background: linear-gradient(90deg, #00c3ff, #3dff7a);
             border-radius: 6px;
-          "
-        />
+            padding: 3px;
+        ">
+        </div>
+
         <div>
-          <div>SysSentry — Real-Time Monitoring</div>
-          <small style="color: var(--muted)"
-            >Live telemetry · last 40 samples</small
-          >
+          <div>SysSentry — Real-Time Dashboard</div>
+          <small style="color: var(--muted)">System Health Monitor</small>
         </div>
       </div>
 
@@ -409,6 +394,9 @@
             <th>CPU (%)</th>
             <th>Memory (%)</th>
             <th>Disk (%)</th>
+            <th>Read IOPS</th>
+            <th>Write IOPS</th>
+            <th>Throughput (MB/s)</th>
           </tr>
         </thead>
         <tbody></tbody>
@@ -448,32 +436,33 @@
       const API = window.location.origin + "/";
       let pollInterval = 1000;
       let pollTimer = null;
+      -(
+        // Tabs
+        document.querySelectorAll(".tab").forEach((t) =>
+          t.addEventListener("click", (e) => {
+            document
+              .querySelectorAll(".tab")
+              .forEach((x) => x.classList.remove("active"));
+            t.classList.add("active");
 
-      // Tabs
-      document.querySelectorAll(".tab").forEach((t) =>
-        t.addEventListener("click", (e) => {
-          document
-            .querySelectorAll(".tab")
-            .forEach((x) => x.classList.remove("active"));
-          t.classList.add("active");
+            const tab = t.dataset.tab;
+            document
+              .querySelectorAll(".page")
+              .forEach((p) => p.classList.remove("active"));
+            document.getElementById(tab).classList.add("active");
 
-          const tab = t.dataset.tab;
-          document
-            .querySelectorAll(".page")
-            .forEach((p) => p.classList.remove("active"));
-          document.getElementById(tab).classList.add("active");
-
-          if (tab === "dashboard") {
-            startPolling();
-            stopHistoryAutoRefresh();
-          } else if (tab === "history") {
-            stopHistoryAutoRefresh();
-            startHistoryAutoRefresh();
-          } else if (tab === "insights") {
-            loadInsights();
-            stopHistoryAutoRefresh();
-          }
-        })
+            if (tab === "dashboard") {
+              startPolling();
+              stopHistoryAutoRefresh();
+            } else if (tab === "history") {
+              stopHistoryAutoRefresh();
+              startHistoryAutoRefresh();
+            } else if (tab === "insights") {
+              loadInsights();
+              stopHistoryAutoRefresh();
+            }
+          })
+        )
       );
 
       // Light mode
@@ -789,7 +778,11 @@
               <td>${row.cpu_percent ?? ""}</td>
               <td>${row.memory_percent ?? ""}</td>
               <td>${row.disk_percent ?? ""}</td>
-            `;
+              <td>${row.read_iops ?? ""}</td>
+              <td>${row.write_iops ?? ""}</td>
+              <td>${row.throughput ?? ""}</td>
+          `;
+
             tbody.appendChild(tr);
           });
         } catch (e) {
