@@ -181,14 +181,6 @@ Swagger Docs → `/docs`
 - ML-based anomaly detection
 - Historical time-series graphs
 
----
-
-# ❤️ Contributing
-Pull requests are welcome.  
-Create issues for bugs or new features.
-
----
-
 # 📜 License
 MIT License
 
